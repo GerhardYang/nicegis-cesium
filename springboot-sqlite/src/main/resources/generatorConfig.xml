@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry location="C:\Users\yanggh\.m2\repository\org\xerial\sqlite-jdbc\3.21.0.1\sqlite-jdbc-3.21.0.1.jar"/>
+    <context id="context">
+        <!-- 自动识别数据库关键字，默认false -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <!--可以使用``包括字段名，避免字段名与sql保留字冲突报错 -->
+        <property name="beginningDelimiter" value="'"/>
+        <property name="endingDelimiter" value="'"/>
+        <property name="beginningDelimiter" value="'"/>
+        <property name="endingDelimiter" value="'"/>
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+
+        <jdbcConnection driverClass="org.sqlite.JDBC"
+                        connectionURL="jdbc:sqlite:src/main/db/nicegis.db"
+                        userId="root" password="root"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <javaModelGenerator
+                targetPackage="com.nicegis.gerhard.model" targetProject=".\src\main\java">
+        </javaModelGenerator>
+        <sqlMapGenerator
+                targetPackage="com.nicegis.gerhard.mapper" targetProject=".\src\main\java"/>
+        <javaClientGenerator
+                targetPackage="com.nicegis.gerhard.mapper" targetProject=".\src\main\java"
+                type="XMLMAPPER"/>
+        <table tableName="user" domainObjectName="User">
+        </table>
+    </context>
+</generatorConfiguration>
+        <!-- mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate -->

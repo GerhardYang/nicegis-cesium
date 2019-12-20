@@ -1,0 +1,136 @@
+{
+    "systitle": "仙桃市二三维地理信息数据融合与发布平台",
+    "copyright": "GerhardYang@SuperMap",
+    "POI": {
+        "url": "http://huazhong.supermap.group:8092/iserver/services/data-XT/rest/data",
+        "datasource": "xiantaopoi",
+        "dataset": "POI_XT",
+        "queryfield": "POI名称",
+        "showfield": [
+            {
+                "POI名称": "名称"
+            },
+            {
+                "小分类": "分类"
+            }
+        ]
+    },
+    "fpf": [
+        {
+            "name": "鸟巢",
+            "path": "./js/fpf/鸟巢.fpf"
+        },
+        {
+            "name": "CBD",
+            "path": "./js/fpf/cbd.fpf"
+        },
+        {
+            "name": "niaocao",
+            "path": "./js/fpf/niaocao.fpf"
+        }
+    ],
+    "baselayers": [
+        {
+            "name": "googleimg",
+            "isShow": true,
+            "type": "xyz",
+            "options": {
+                "url": "https://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}"
+            }
+        },
+        {
+            "name": "china400",
+            "isShow": false,
+            "type": "supermap",
+            "options": {
+                "url": "https://www.supermapol.com/realspace/services/map-China400/rest/maps/China400"
+            }
+        },
+        {
+            "name": "tdt",
+            "isShow": true,
+            "type": "wmts",
+            "options": {
+                "url": "https://{s}.tianditu.gov.cn/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=10e4a33383d86f868e6c5748e8f6cbb5",
+                "layer": "cia",
+                "style": "default",
+                "tileMatrixSetID": "w",
+                "format": "tiles",
+                "subdomains": [
+                    "t0",
+                    "t1",
+                    "t2",
+                    "t3",
+                    "t4",
+                    "t5",
+                    "t6",
+                    "t7"
+                ],
+                "maximumLevel": 18
+            }
+        }
+    ],
+    "terrain": {
+        "isShow": false,
+        "type": "stk",
+        "url": "https://www.supermapol.com/realspace/services/3D-stk_terrain/rest/realspace/datas/info/data/path"
+    },
+    "initScene": {
+        "des": "系统初始化的URl与相机位置,xyzOrlonlat填写xyz为笛卡尔定位，lonlat为经纬度定位",
+        "url": "http://huazhong.supermap.group:8092/iserver/services/3D-xiantao_R-test/rest/realspace",
+        "xyzOrlonlat": "xyz",
+        "destinationLonlat": {
+            "lon": 113.45,
+            "lat": 30.37,
+            "height": 40000.0
+        },
+        "destinationXYZ": {
+            "x": -2208542.0624689707,
+            "y": 5137748.264480614,
+            "z": 3207897.6557617714
+        },
+        "orientation": {
+            "heading": 0.20044912678048377,
+            "pitch": -1.0273986653366607,
+            "roll": 0.011305552691004195
+        }
+    },
+    "scene": [
+        {
+            "id": 1,
+            "label": "索菲亚大教堂",
+            "checked": true,
+            "sceneurl": "http://www.supermapol.com/realspace/services/3D-suofeiya_church/rest/realspace"
+        },
+        {
+            "id": 2,
+            "label": "图层二",
+            "sceneurl": "https://www.supermapol.com/realspace/services/3D-srsb/rest/realspace"
+        },
+        {
+            "id": 3,
+            "label": "北京CDB",
+            "sceneurl": "https://www.supermapol.com/realspace/services/3D-CBD/rest/realspace"
+        },
+        {
+            "id": 4,
+            "label": "广州白模",
+            "sceneurl": "https://www.supermapol.com/realspace/services/3D-GuangZhou/rest/realspace"
+        },
+        {
+            "id": 5,
+            "label": "北京奥林匹克公园",
+            "sceneurl": "https://www.supermapol.com/realspace/services/3D-OlympicGreen/rest/realspace"
+        },
+        {
+            "id": 6,
+            "label": "WEBGL点云",
+            "sceneurl": "https://www.supermapol.com/realspace/services/3D-pointCloud/rest/realspace"
+        },
+        {
+            "id": 7,
+            "label": "柱状图",
+            "sceneurl": "https://www.supermapol.com/realspace/services/3D-Histogram/rest/realspace"
+        }
+    ]
+}

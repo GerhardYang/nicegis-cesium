@@ -1,0 +1,38 @@
+{
+  "name": "nicegiscesium",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@supermap/iclient-leaflet": "^10.0.0",
+    "axios": "^0.19.0",
+    "core-js": "^3.3.2",
+    "element-ui": "^2.12.0",
+    "font-awesome": "^4.7.0",
+    "vue": "^2.6.10",
+    "vue-axios": "^2.1.5",
+    "vue-layer": "^1.1.6",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.0.0",
+    "@vue/cli-plugin-vuex": "^4.0.5",
+    "@vue/cli-service": "^4.0.0",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2",
+    "terser-webpack-plugin": "^2.2.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}

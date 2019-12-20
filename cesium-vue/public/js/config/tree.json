@@ -1,0 +1,92 @@
+{
+    "id": 1,
+    "label": "仙桃市",
+    "geojson": "./js/geojson/xiantao.json",
+    "children": [
+        {
+            "id": 11,
+            "label": "沙嘴街道办事处",
+            "geojson": "./js/geojson/shazui.json"
+        },
+        {
+            "id": 12,
+            "label": "干河街道办事处",
+            "geojson": "./js/geojson/ganhe.json"
+        },
+        {
+            "id": 13,
+            "label": "龙华山办事处",
+            "geojson": "./js/geojson/longhuashan.json"
+        },
+        {
+            "id": 14,
+            "label": "郑场镇",
+            "geojson": "./js/geojson/zhengchang.json"
+        },
+        {
+            "id": 15,
+            "label": "毛嘴镇",
+            "geojson": "./js/geojson/maozui.json"
+        },
+        {
+            "id": 16,
+            "label": "豆河镇",
+            "geojson": "./js/geojson/douhe.json"
+        },
+        {
+            "id": 17,
+            "label": "三伏潭镇",
+            "geojson": "./js/geojson/sanfutan.json"
+        },
+        {
+            "id": 18,
+            "label": "胡场镇",
+            "geojson": "./js/geojson/huchang.json"
+        },
+        {
+            "id": 19,
+            "label": "长倘口镇",
+            "geojson": "./js/geojson/changhekou.json"
+        },
+        {
+            "id": 120,
+            "label": "西流河镇",
+            "geojson": "./js/geojson/xiliuhe.json"
+        },
+        {
+            "id": 121,
+            "label": "沙湖镇",
+            "geojson": "./js/geojson/shahu.json"
+        },
+        {
+            "id": 122,
+            "label": "杨林尾镇",
+            "geojson": "./js/geojson/yanglinwei.json"
+        },
+        {
+            "id": 123,
+            "label": "彭场镇",
+            "geojson": "./js/geojson/pengchang.json"
+        },
+        {
+            "id": 124,
+            "label": "张沟镇",
+            "geojson": "./js/geojson/zhanggou.json"
+        },
+        {
+            "id": 125,
+            "label": "郭河镇",
+            "geojson": "./js/geojson/guohe.json"
+        },
+        {
+            "id": 126,
+            "label": "沔城回族镇",
+            "geojson": "./js/geojson/miancheng.json"
+        },
+        {
+            "id": 127,
+            "label": "陈场镇",
+            "geojson": "./js/geojson/chenchang.json"
+        }
+    ]
+}

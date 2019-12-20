@@ -1,0 +1,124 @@
+/* 覆盖vue-layer样式 */
+
+.vl-notify.vl-notify-main {
+    background-color: #333;
+    border: 1px solid #000;
+    box-shadow: 1px 1px 15px rgba(252, 252, 252, 0.3);
+    opacity: 0.8;
+}
+
+.vl-notify.vl-notify-alert h2.vl-notice-title {
+    background-color: #000;
+    border-bottom: 1px solid #333;
+}
+
+.vl-notify.vl-notify-alert h2.vl-notice-title .lv-title {
+    color: #fff;
+}
+
+.notify-btn-primary {
+    background-color: #c03 !important;
+    border: 1px solid #c03 !important;
+}
+
+.vl-notify-content-div {
+    color: #fff;
+}
+
+/* 覆盖layui样式 */
+
+.layui-elem-quote {
+    background: #333;
+    opacity: 0.7;
+    border-left: 15px solid #c03;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    margin-left: 120px;
+    margin-top: -150px;
+    max-width: 600px !important;
+}
+
+/* 覆盖elementui样式 */
+
+.el-input-group__append, .el-input-group__prepend {
+    background: #333 !important;
+    color: #fff !important;
+    border: 2px solid #8a8a8a !important;
+}
+
+.el-input__inner {
+    background: #333 !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border: 2px solid #8a8a8a !important;
+    /* border-left: none !important; */
+}
+
+.el-button--danger {
+    background-color: #c03 !important;
+    border-color: #c03 !important;
+}
+
+.el-tree {
+    position: relative;
+    cursor: default;
+    background: #333;
+    color: #fff;
+}
+
+.el-tree-node .is-expanded .is-current .is-focusable .is-checked {
+    background-color: #000 !important;
+}
+
+.el-tree-node__content:hover {
+    background-color: #000 !important;
+}
+
+.el-tree-node:focus>.el-tree-node__content {
+    background-color: #000 !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    background-color: #660033;
+    border-color: #660033;
+}
+
+.el-checkbox__inner {
+    background: #333;
+}
+
+.el-select-dropdown__item {
+    color: #eee;
+}
+
+.el-select-dropdown__item.selected {
+    color: #660033;
+}
+
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+    background-color: #000;
+}
+
+.search>i {
+    margin-top: -5px;
+    margin-left: -5px;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+}
+
+.el-select-dropdown {
+    border: 1px solid #000;
+    background-color: #333;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+}
+
+.el-popper[x-placement^=bottom] .popper__arrow::after {
+    border-bottom-color: #333 !important;
+}
+
+/* 隐藏默认信息框 */
+
+.cesium-infoBox-visible {
+    opacity: 0 !important;
+}
