@@ -3,8 +3,8 @@
  * @Version: 1.0
  * @Autor: GerhardYang
  * @Date: 2019-08-29 20:07:55
- * @LastEditors: GerhardYang
- * @LastEditTime: 2019-12-12 17:46:00
+ * @LastEditors  : GerhardYang
+ * @LastEditTime : 2019-12-20 13:12:30
  -->
 <template>
   <div id="footer">
@@ -39,7 +39,6 @@ export default {
   },
   mounted() {
     let stateInfos = this.stateInfos;
-    let viewer = this.$viewer;
     this.copyright = this.$store.state.config.copyright;
     this.handleMOUSE_MOVE(stateInfos, viewer);
     this.handleWHEEL(stateInfos, viewer);

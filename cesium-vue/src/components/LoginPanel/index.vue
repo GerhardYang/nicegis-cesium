@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-12-12 09:56:45
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-23 10:14:50
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -11,11 +11,11 @@
     <div class="loginpanel">
       <div class="login">
         <br />
-        <el-input placeholder="用户名" v-model="username"></el-input>
+        <el-input placeholder="  登录用户名" v-model="username"></el-input>
         <br />
         <br />
         <br />
-        <el-input show-password placeholder="密码" v-model="pwd"></el-input>
+        <el-input show-password placeholder="  登录密码" v-model="pwd"></el-input>
         <br />
         <br />
         <br />
@@ -39,7 +39,8 @@ export default {
     };
   },
   mounted() {
-    this.systitle = this.$store.state.config.systitle;
+    this.systitle = this.$store.state.config.systitle;  
+    document.title = "欢迎使用:"+this.systitle;
   },
   methods: {
     login: function() {

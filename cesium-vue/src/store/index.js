@@ -1,8 +1,8 @@
 /*
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:01:37
- * @LastEditTime: 2019-12-12 17:46:10
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-24 15:04:06
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  */
 import Vue from 'vue'
@@ -16,7 +16,6 @@ export default new Vuex.Store({
     isLogin: false,
     loginTime: null,
     viewer: null,
-    areatree: null,
     config: null
   },
   mutations: {
@@ -28,9 +27,6 @@ export default new Vuex.Store({
     },
     setLogintime: (state, loginTime) => {
       state.loginTime = loginTime
-    },
-    changeAreatree: (state, areatree) => {
-      state.areatree = areatree
     },
     changeConfig: (state, config) => {
       state.config = config

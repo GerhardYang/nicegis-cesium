@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-11-13 20:27:20
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-24 14:56:29
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -23,28 +23,39 @@
 <script>
 import LayerIframe from "./LayerIframe";
 export default {
+  data() {
+    return {
+      layerid: {
+        layer: null
+      }
+    };
+  },
+  mounted() {
+    this.openLayersControler();
+  },
   methods: {
     openLayersControler: function() {
-      this.$layer.closeAll();
-      this.$layer.iframe({
-        content: {
-          content: LayerIframe, //传递的组件对象
-          parent: this, //当前的vue对象
-          data: {} //props
-        },
-        cancel: () => {
-          //关闭弹窗事件
-          
-        },
-        shade: false, //是否显示遮罩
-        shadeClose: false, //点击遮罩是否关闭
-        maxmin: false, //开启最大化最小化
-        scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
-        resize: false, //是否允许拉伸，默认是不允许
-        area: ["300px", "600px"],
-        offset: [160, 450],
-        title: "图层控制"
-      });
+      if (this.layerid.layer == null) {
+        this.layerid.layer = this.$layer.iframe({
+          area: ["300px", "600px"],
+          offset: [160, 450],
+          title: "图层控制",
+          shade: false, //是否显示遮罩
+          shadeClose: false, //点击遮罩是否关闭
+          maxmin: false, //开启最大化最小化
+          scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
+          resize: false, //是否允许拉伸，默认是不允许
+          content: {
+            content: LayerIframe, //传递的组件对象
+            parent: this, //当前的vue对象
+            data: {} //props
+          },
+          cancel: () => {
+            //关闭弹窗事件
+            this.layerid.layer = null;
+          }
+        });
+      }
     }
   }
 };

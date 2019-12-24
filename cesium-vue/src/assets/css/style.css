@@ -80,8 +80,8 @@
 }
 
 .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-    background-color: #660033;
-    border-color: #660033;
+    background-color: #c03;
+    border-color: #c03;
 }
 
 .el-checkbox__inner {
@@ -93,7 +93,7 @@
 }
 
 .el-select-dropdown__item.selected {
-    color: #660033;
+    color: #c03;
 }
 
 .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
@@ -115,6 +115,32 @@
 
 .el-popper[x-placement^=bottom] .popper__arrow::after {
     border-bottom-color: #333 !important;
+}
+
+.el-link--default {
+    color: #eee !important;
+}
+
+.el-pagination__total {
+    color: #eee !important;
+    text-shadow: 0.2rem 0rem 0.5rem #c03, -0.2rem 0rem 0.5rem #c03, 0rem 0.2rem 0.5rem #c03, 0rem -0.2rem 0.5rem #c03;
+}
+
+.el-pagination--small>button {
+    background: transparent !important;
+}
+
+.el-pager>li {
+    background: transparent !important;
+    color: #eee !important;
+}
+
+.el-pager>li .active {
+    color: #c03;
+}
+
+.el-pagination>button {
+    color: #fff !important;
 }
 
 /* 隐藏默认信息框 */

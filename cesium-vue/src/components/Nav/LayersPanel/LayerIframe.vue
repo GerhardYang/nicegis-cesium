@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-11-15 03:39:43
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-24 15:55:17
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -12,8 +12,11 @@
       node-key="id"
       default-expand-all
       check-on-click-node
-      :expand-on-click-node="false"
+      :default-checked-keys="defaultCheckKeys"
+      expand-on-click-node
       ref="layers"
+      show-checkbox
+      @check-change="handleCheckChange"
       @node-click="nodeClick"
     ></el-tree>
   </div>
@@ -27,7 +30,12 @@ export default {
     };
   },
   mounted() {
-    this.data = this.$store.state.config.scene;
+    for (let scene of this.$store.state.config.scenes) {
+      if (scene.isInitScene) {
+        this.defaultCheckKeys.push(scene.id);
+      }
+    }
+    this.data = this.$store.state.config.scenes;
     for (let item of this.data) {
       if (item.checked) {
         this.defaultCheckKeys.push(item.id);
@@ -42,8 +50,6 @@ export default {
     },
     addLayer(url) {
       try {
-        let viewer = this.$viewer;
-        let scene = viewer.scene;
         let widget = viewer.cesiumWidget;
         let promise = scene.open(url);
         Cesium.when(
@@ -64,7 +70,8 @@ export default {
           widget.showErrorPanel(title, undefined, e);
         }
       }
-    }
+    },
+    handleCheckChange: function() {}
   }
 };
 </script>

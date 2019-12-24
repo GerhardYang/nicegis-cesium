@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-11-15 04:27:44
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-24 15:07:10
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -28,19 +28,18 @@ export default {
     };
   },
   mounted() {
-    this.data.push(this.$store.state.areatree);
+    this.data.push(this.$store.state.config.division);
   },
   watch: {
     "$store.state.config": function() {
-      this.data.push(this.$store.state.areatree);
+      this.data.push(this.$store.state.config.division);
     }
   },
   methods: {
     nodeClick(data, node) {
       console.log(data);
-
-      let viewer = this.$viewer;
       viewer.dataSources.removeAll();
+
       let options = {
         camera: viewer.scene.camera,
         canvas: viewer.scene.canvas,
@@ -48,6 +47,7 @@ export default {
       };
 
       let promise = Cesium.GeoJsonDataSource.load(data.geojson);
+
       promise.then(function(dataSource, options) {
         viewer.dataSources.add(dataSource);
         let entities = dataSource.entities.values;
@@ -62,7 +62,7 @@ export default {
           entity.polygon.outlineWidth = 10;
         }
       });
-      // this.$store.commit("changeViewer", viewer);
+
       viewer.flyTo(promise);
     }
   }

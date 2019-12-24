@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-12-12 17:37:13
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-24 15:29:45
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -68,6 +68,109 @@ export default {
   },
   mounted() {
     this.systitle = this.$store.state.config.systitle;
+    let baselayers = this.$store.state.config.baselayers;
+    let terrain = this.$store.state.config.terrain;
+    let widget = viewer.cesiumWidget;
+
+    // 地形
+    if (terrain) {
+      let name = terrain.name;
+      name = new Cesium.CesiumTerrainProvider({
+        url: terrain.url,
+        requestWaterMask: true,
+        requestVertexNormals: true
+      });
+      if (terrain.isShow) {
+        viewer.terrainProvider = name;
+      }
+    }
+
+    // 影像
+    if (baselayers) {
+      for (let layer of baselayers) {
+        let layername = layer.name;
+        let type = layer.type;
+        switch (type) {
+          case "xyz":
+            layername = new Cesium.UrlTemplateImageryProvider(layer.options);
+            break;
+          case "wmts":
+            layername = new Cesium.WebMapTileServiceImageryProvider(
+              layer.options
+            );
+            break;
+          case "supermap":
+            layername = new Cesium.SuperMapImageryProvider(layer.options);
+            break;
+          default:
+            break;
+        }
+
+        if (layer.isShow) {
+          // console.log(layer.options, layername);
+          viewer.imageryLayers.addImageryProvider(layername);
+        }
+      }
+    }
+
+    /* 初始化定位*/
+    let initSceneURL = null;
+    for (let scene of this.$store.state.config.scenes) {
+      if (scene.isInitScene) {
+        initSceneURL = scene.sceneurl;
+        break;
+      }
+    }
+
+    let xyzOrlonlat = this.$store.state.config.initCarame.xyzOrlonlat;
+    let destinationLonlat = this.$store.state.config.initCarame
+      .destinationLonlat;
+    let destinationXYZ = this.$store.state.config.initCarame.destinationXYZ;
+
+    let xyzDestination = new Cesium.Cartesian3(
+      destinationXYZ.x,
+      destinationXYZ.y,
+      destinationXYZ.z
+    );
+    let lonlatDestination = Cesium.Cartesian3.fromDegrees(
+      destinationLonlat.lon,
+      destinationLonlat.lat,
+      destinationLonlat.height
+    );
+
+    console.log(initSceneURL);
+    try {
+      let promise = scene.open(initSceneURL);
+      Cesium.when(
+        promise,
+        function() {
+          //设置相机位置、视角，便于观察场景
+          if (xyzOrlonlat == "xyz") {
+            // console.log(destinationXYZ);
+            scene.camera.setView({
+              destination: xyzDestination,
+              orientation: orientation
+            });
+          }
+          if (xyzOrlonlat == "lonlat") {
+            // console.log(destinationLonlat);
+            scene.camera.setView({
+              destination: lonlatDestination,
+              orientation: orientation
+            });
+          }
+        },
+        function() {
+          let title = "加载SCP失败，请检查网络连接状态或者url地址是否正确？";
+          widget.showErrorPanel(title, undefined, e);
+        }
+      );
+    } catch (e) {
+      if (widget._showRenderLoopErrors) {
+        let title = "渲染时发生错误，已停止渲染。";
+        widget.showErrorPanel(title, undefined, e);
+      }
+    }
   },
   components: {
     RoamPanel,
@@ -80,7 +183,7 @@ export default {
   },
   methods: {
     selectTab: function(e) {
-      console.log(e);
+      // console.log(e);
       switch (e.target.innerText) {
         case "场景漫游":
           for (let item in this.panelVisiable) {

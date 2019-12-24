@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-11-13 19:32:06
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-20 13:34:50
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -52,8 +52,7 @@ export default {
       $("#bubble").hide();
     },
     goPosition: function() {
-      let viewer = this.$viewer;
-      var scene = viewer.scene;
+     
       var scenePosition = null; // 记录在场景中点击的笛卡尔坐标点
       var infoboxContainer = document.getElementById("bubble");
 

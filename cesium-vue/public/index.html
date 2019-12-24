@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 20:15:00
- * @LastEditTime: 2019-12-12 16:56:51
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-23 10:16:55
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title>仙桃市二三维地理信息数据融合与发布平台</title>
+    <title></title>
     <!-- 超图webgl库 -->
     <link rel="stylesheet" href="./libs/SuperMapCesium/Widgets/widgets.css" />
     <script src="./libs/SuperMapCesium/Cesium.js"></script>
@@ -34,14 +34,13 @@
     }
   </style>
   <body>
-    <noscript>
-      <strong>浏览器未启用JavaScript</strong>
-    </noscript>
-    <h1 class="loading">loading...</h1>
+    <h1 class="loading">Loading...</h1>
     <script>
       $(".loading").lettering();
     </script>
+
     <div id="container"></div>
+    <blockquote id="bubble" class="bubble"></blockquote>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

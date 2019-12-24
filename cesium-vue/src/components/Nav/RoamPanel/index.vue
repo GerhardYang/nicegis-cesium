@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-11-09 21:49:19
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-20 13:31:51
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -33,7 +33,6 @@ export default {
   },
   methods: {
     goGlobal: function() {
-      let viewer = this.$viewer;
       viewer.scene.camera.setView({
         destination: new Cesium.Cartesian3(
           -3562029.914602287,
@@ -48,7 +47,6 @@ export default {
       });
     },
     goChina: function() {
-      let viewer = this.$viewer;
       viewer.scene.camera.setView({
         destination: new Cesium.Cartesian3(
           -3652560.2263748404,
@@ -63,7 +61,6 @@ export default {
       });
     },
     goXiantao: function() {
-      let viewer = this.$viewer;
       viewer.scene.camera.setView({
         destination: new Cesium.Cartesian3(
           -2217097.4818491847,

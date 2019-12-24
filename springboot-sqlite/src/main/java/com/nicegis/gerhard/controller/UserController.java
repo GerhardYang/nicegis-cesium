@@ -27,8 +27,19 @@ public class UserController {
     }
 
     @GetMapping(value = "/")
+    void index(HttpServletResponse response) throws IOException {
+        response.sendRedirect("index.html");
+    }
+
+    @GetMapping(value = "/api")
     void handleLogout(HttpServletResponse response) throws IOException {
         response.sendRedirect("swagger-ui.html");
+    }
+
+    @RequestMapping("/hello")
+    void hello(HttpServletResponse response) throws IOException {
+        //这边我们,默认是返到templates下的login.html
+        response.sendRedirect("login.html");
     }
 
     @PostMapping(value = "/add")
@@ -51,7 +62,7 @@ public class UserController {
     @PostMapping(value = "/update")
     @ApiOperation(value = "更新", notes = "在用户表中修改纪录")
     public ResponseDto Update(
-            @ApiParam(name = "post请求体",value = "前端发来的用户信息,其中必须要有id", required = true) @RequestBody User user
+            @ApiParam(name = "post请求体", value = "前端发来的用户信息,其中必须要有id", required = true) @RequestBody User user
     ) throws IOException {
         ResponseDto<List<User>> responseDto = userService.Update(user);
         return responseDto;
@@ -67,7 +78,7 @@ public class UserController {
     @PostMapping(value = "/select")
     @ApiOperation(value = "根据ID查询")
     public ResponseDto Select(
-            @ApiParam(name = "post请求体",value = "需要查询用户的ID", required = true) @RequestBody Id id
+            @ApiParam(name = "post请求体", value = "需要查询用户的ID", required = true) @RequestBody Id id
     ) {
         ResponseDto responseDto = userService.Select(id);
         return responseDto;

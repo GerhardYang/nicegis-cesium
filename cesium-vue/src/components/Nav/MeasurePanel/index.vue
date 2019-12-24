@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-11-14 00:35:44
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-24 14:43:43
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -45,8 +45,6 @@ export default {
   methods: {
     distance: function() {
       let clampMode = 0; // 空间模式
-      let viewer = this.$viewer;
-      let scene = viewer.scene;
       let widget = viewer.cesiumWidget;
       //初始化测量距离
       let handlerDis = new Cesium.MeasureHandler(
@@ -80,8 +78,6 @@ export default {
     },
     area: function() {
       let clampMode = 0; // 空间模式
-      let viewer = this.$viewer;
-      let scene = viewer.scene;
       let widget = viewer.cesiumWidget;
 
       //初始化测量面积
@@ -118,8 +114,6 @@ export default {
     },
     height: function() {
       let clampMode = 0; // 空间模式
-      let viewer = this.$viewer;
-      let scene = viewer.scene;
       let widget = viewer.cesiumWidget;
 
       //初始化测量高度

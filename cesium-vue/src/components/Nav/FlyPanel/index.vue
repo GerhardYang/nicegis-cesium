@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-12-12 11:08:33
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-20 13:35:56
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -80,7 +80,6 @@ export default {
       this.currentRoute.isStopVisible = false;
     }
 
-    let viewer = this.$viewer;
     this.routes = new Cesium.RouteCollection(viewer.entities);
     //初始化飞行管理
     this.flyManager = new Cesium.FlyManager({
@@ -92,8 +91,7 @@ export default {
     select: function(value) {
       console.log(value);
       let _self = this;
-      let viewer = this.$viewer;
-
+   
       let fpf = this.$store.state.config.fpf;
       let fpfpath = fpf[value].path;
 

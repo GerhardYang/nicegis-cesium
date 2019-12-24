@@ -1,8 +1,8 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-12-12 17:46:34
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-20 13:31:15
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
@@ -86,8 +86,7 @@ export default {
       this.sliderValue.saturation = 1;
     },
     toggleNav: function() {
-      let viewer = this.$viewer;
-      // console.log(viewer);
+  
       let nav = document.getElementsByClassName(
         "cesium-viewer-navigationContainer"
       );
@@ -99,7 +98,6 @@ export default {
       }
     },
     toggleFPS: function() {
-      let viewer = this.$viewer;
       viewer.scene.debugShowFramesPerSecond = !viewer.scene
         .debugShowFramesPerSecond;
     },
@@ -107,26 +105,21 @@ export default {
       $("#footer").toggle();
     },
     changeBrightness: function(value) {
-      let scene = this.$viewer.scene;
       var correction = scene.colorCorrection; //创建颜色校正对象
       correction.show = true; //开启颜色校正
       correction.brightness = parseFloat(value);
-      // console.log(value);
     },
     changeHue: function(value) {
-      let scene = this.$viewer.scene;
       var correction = scene.colorCorrection; //创建颜色校正对象
       correction.show = true; //开启颜色校正
       correction.hue = parseFloat(value);
     },
     changeContrast: function(value) {
-      let scene = this.$viewer.scene;
       var correction = scene.colorCorrection; //创建颜色校正对象
       correction.show = true; //开启颜色校正
       correction.contrast = parseFloat(value);
     },
     changeSaturation: function(value) {
-      let scene = this.$viewer.scene;
       var correction = scene.colorCorrection; //创建颜色校正对象
       correction.show = true; //开启颜色校正
       correction.saturation = parseFloat(value);

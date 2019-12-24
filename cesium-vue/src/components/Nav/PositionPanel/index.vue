@@ -1,16 +1,16 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime: 2019-12-12 16:43:45
- * @LastEditors: GerhardYang
+ * @LastEditTime : 2019-12-24 16:38:37
+ * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
 <template>
   <div class="position">
     <div class="list-item">
       <span class="list-name">搜索</span>
-      <input type="text" class="search-box" v-model="input" placeholder="请输入" />
-      <el-button type="danger" class="search" icon="el-icon-search" plain @click="search"></el-button>
+      <input type="text" id="searchInput" class="search-box" v-model="input" placeholder="请输入" />
+      <el-button type="danger" class="search" icon="el-icon-search" plain @click="gotoSearch"></el-button>
     </div>
     <div class="list-item">
       <span class="list-name">定位</span>
@@ -32,159 +32,107 @@
   </div>
 </template>
 <script>
+import searchIframe from "./searchIframe.vue";
 import xyzIframe from "./xyzIframe";
 import areaIframe from "./areaIframe";
 export default {
   data() {
     return {
       input: "",
-      position: {
-        x: 113.45,
-        y: 30.37,
-        z: 50
-      },
-      entity: null
+      layerIndex: {
+        search: null,
+        area: null,
+        xyz: null
+      }
     };
   },
+  mounted() {
+    let _selt = this;
+    // 搜索框监听回车
+    $("#searchInput").keypress(function(e) {
+      // console.log(e);
+      if (e.keyCode == 13) {
+        _selt.gotoSearch();
+      }
+    });
+  },
   methods: {
-    search: function() {
-      let _self = this;
-      let POI = this.$store.state.config.POI;
-      // console.log(this.input, POI);
-      let sqlParam = new SuperMap.GetFeaturesBySQLParameters({
-        queryParameter: {
-          attributeFilter: `${POI.queryfield} like '%${this.input}%'`
-        },
-        datasetNames: [`${POI.datasource}:${POI.dataset}`]
-      });
-      L.supermap
-        .featureService(POI.url)
-        .getFeaturesBySQL(sqlParam, function(serviceResult) {
-          // console.log(serviceResult);
-          if (serviceResult.result.featureCount > 0) {
-            let feature = serviceResult.result.features.features[0];
-            console.log(feature);
-            _self.position.x = feature.geometry.coordinates[0];
-            _self.position.y = feature.geometry.coordinates[1];
-            _self.goPosition(feature.properties);
-          }
+    gotoSearch: function() {
+      if (this.layerIndex.search == null) {
+        this.layerIndex.search = this.$layer.iframe({
+          content: {
+            content: searchIframe, //传递的组件对象
+            parent: this, //当前的vue对象
+            data: { input: this.input } //props
+          },
+          cancel: () => {
+            //关闭弹窗事件
+            this.layerIndex.search = null;
+            viewer.dataSources.removeAll();
+          },
+          shade: false, //是否显示遮罩
+          shadeClose: false, //点击遮罩是否关闭
+          maxmin: false, //开启最大化最小化
+          scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
+          resize: false, //是否允许拉伸，默认是不允许
+          area: ["200px", "500px"],
+          offset: [145, 400],
+          title: "搜索结果"
         });
+      }
     },
     gotoArea: function() {
-      this.$layer.closeAll();
-      this.$layer.iframe({
-        content: {
-          content: areaIframe, //传递的组件对象
-          parent: this, //当前的vue对象
-          data: {} //props
-        },
-        cancel: () => {
-          //关闭弹窗事件
-          let viewer = this.$viewer;
-          viewer.dataSources.removeAll();
-        },
-        shade: false, //是否显示遮罩
-        shadeClose: false, //点击遮罩是否关闭
-        maxmin: false, //开启最大化最小化
-        scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
-        resize: false, //是否允许拉伸，默认是不允许
-        area: ["300px", "600px"],
-        offset: [160, 450],
-        title: "区划定位"
-      });
+      if (this.layerIndex.area == null) {
+        this.layerIndex.area = this.$layer.iframe({
+          content: {
+            content: areaIframe, //传递的组件对象
+            parent: this, //当前的vue对象
+            data: {} //props
+          },
+          cancel: () => {
+            //关闭弹窗事件
+            this.layerIndex.area = null;
+            viewer.dataSources.removeAll();
+          },
+          shade: false, //是否显示遮罩
+          shadeClose: false, //点击遮罩是否关闭
+          maxmin: false, //开启最大化最小化
+          scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
+          resize: false, //是否允许拉伸，默认是不允许
+          area: ["300px", "600px"],
+          offset: [165, 460],
+          title: "区划定位"
+        });
+      }
     },
     gotoXYZ: function() {
-      this.$layer.closeAll();
-      this.$layer.iframe({
-        content: {
-          content: xyzIframe, //传递的组件对象
-          parent: this, //当前的vue对象
-          data: {} //props
-        },
-        cancel: () => {
-          //关闭弹窗事件
-          $("#bubble").hide();
-        },
-        shade: false, //是否显示遮罩
-        shadeClose: false, //点击遮罩是否关闭
-        maxmin: false, //开启最大化最小化
-        scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
-        resize: false, //是否允许拉伸，默认是不允许
-        area: ["300px", "300px"],
-        offset: [160, 300],
-        title: "坐标定位"
-      });
+      if (this.layerIndex.xyz == null) {
+        this.layerIndex.xyz = this.$layer.iframe({
+          content: {
+            content: xyzIframe, //传递的组件对象
+            parent: this, //当前的vue对象
+            data: {} //props
+          },
+          cancel: () => {
+            //关闭弹窗事件
+            this.layerIndex.xyz = null;
+            $("#bubble").hide();
+          },
+          shade: false, //是否显示遮罩
+          shadeClose: false, //点击遮罩是否关闭
+          maxmin: false, //开启最大化最小化
+          scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
+          resize: false, //是否允许拉伸，默认是不允许
+          area: ["300px", "300px"],
+          offset: [170, 300],
+          title: "坐标定位"
+        });
+      }
     },
     clear: function() {
       $("#bubble").empty();
       $("#bubble").hide();
-      let viewer = this.$viewer;
       viewer.dataSources.removeAll();
-    },
-    goPosition: function(properties) {
-      let viewer = this.$viewer;
-      var scene = viewer.scene;
-      var scenePosition = null; // 记录在场景中点击的笛卡尔坐标点
-      var infoboxContainer = document.getElementById("bubble");
-
-      scene.postRender.addEventListener(function() {
-        // 每一帧都去计算气泡的正确位置
-        if (scenePosition) {
-          var canvasHeight = scene.canvas.height;
-          var windowPosition = new Cesium.Cartesian2();
-          Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-            scene,
-            scenePosition,
-            windowPosition
-          );
-          infoboxContainer.style.bottom =
-            canvasHeight - windowPosition.y + 45 + "px";
-          infoboxContainer.style.left = windowPosition.x - 70 + "px";
-          infoboxContainer.style.visibility = "visible";
-        }
-      });
-
-      var position = Cesium.Cartesian3.fromDegrees(
-        parseFloat(this.position.x),
-        parseFloat(this.position.y),
-        parseFloat(this.position.z)
-      );
-      scenePosition = position;
-      $("#bubble").empty();
-      let showfield = this.$store.state.config.POI.showfield;
-      let content = `<blockquote class="layui-elem-quote">`;
-      for (let item of showfield) {
-        for (let key in item) {
-          console.log(key);
-          console.log(item[key]);
-          content += `${item[key]}:${properties[key]}<br>`;
-        }
-      }
-      content += `</blockquote>`;
-      $("#bubble").append(content);
-      $("#bubble").show();
-
-      if (this.entity != null) {
-        viewer.entities.remove(this.entity);
-      }
-      this.entity = viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(
-          parseFloat(this.position.x),
-          parseFloat(this.position.y),
-          parseFloat(this.position.z)
-        ),
-        point: {
-          color: Cesium.Color.RED, //点位颜色
-          pixelSize: 0 //像素点大小
-        }
-      });
-      viewer.flyTo(this.entity, {
-        offset: {
-          heading: Cesium.Math.toRadians(0),
-          pitch: Cesium.Math.toRadians(-45),
-          range: 3000
-        }
-      }); //居中到该点
     }
   }
 };

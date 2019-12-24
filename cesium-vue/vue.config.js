@@ -7,13 +7,15 @@
  */
 module.exports = {
   // 根路径
-  publicPath: './'
   // 生产环境去掉map
-  , productionSourceMap: false
+  publicPath: './',
+
   // 生产环境取消console
-  , configureWebpack: (config) => {
-    if (process.env.NODE_ENV === 'production') {
-      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+  productionSourceMap: false,
+
+  configureWebpack: (config) => {
+      if (process.env.NODE_ENV === 'production') {
+        config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+      }
     }
-  }
 }
