@@ -8,7 +8,7 @@
 <template>
   <div class="user">
     <ul>
-      <li @click="info">欢迎您: {{username}}</li>
+      <li @click="info">欢迎您: {{userName}}</li>
     </ul>
   </div>
 </template>
@@ -16,47 +16,55 @@
 export default {
   data() {
     return {
-      username: "",
+      userName: "",
+      loginTime: "",
       layerIndex: {
         user: null
       }
     };
   },
+  mounted() {
+    let _self = this;
+    window.addEventListener("setItem", function(e) {
+      let key = e.key;
+      // console.log(key);
+      if (key == "userName") {
+        _self.userName = e.newValue;
+      }
+      if (key == "loginTime") {
+        // console.log(e);
+        _self.loginTime = e.newValue;
+      }
+    });
+  },
   methods: {
     info: function() {
-      if (this.layerIndex.user == null) {
-        this.layerIndex.user = this.$layer.confirm(
-          `<p>当前登录用户:${this.username}</p>
-        <br/>
-        <p>本次登录时间:${this.$store.state.loginTime}</p>`,
-          {
-            title: "用户信息",
-            btn: ["退出系统", "取消"],
-            shade: false, //是否显示遮罩
-            shadeClose: false, //点击遮罩是否关闭
-            cancel: () => {
-              //关闭弹窗事件
-              this.layerIndex.user = null;
-            }
-          },
-
-          layerid => {
-            this.$layer.msg("欢迎使用！");
-            this.$layer.close(layerid);
-
-            setTimeout(() => {
-              this.$store.commit("setLogin", false);
-            }, 1000);
-          }
-        );
+      if (this.layerIndex.user != null) {
+        this.$layer.close(this.layerIndex.user);
       }
-    }
-  },
-  watch: {
-    "$store.state.username": function() {
-      this.username = this.$store.state.username;
-      console.log(this.$store.state.username);
-      // this.$forceUpdate();
+      this.layerIndex.user = this.$layer.confirm(
+        `<p>当前登录用户:${this.userName}</p>
+        <br/>
+        <p>本次登录时间:${this.loginTime}</p>`,
+        {
+          title: "用户信息",
+          btn: ["退出系统", "取消"],
+          shade: false, //是否显示遮罩
+          shadeClose: false, //点击遮罩是否关闭
+          cancel: () => {
+            //关闭弹窗事件
+            this.layerIndex.user = null;
+          }
+        },
+
+        layerid => {
+          this.$layer.msg("欢迎使用！");
+          this.$layer.close(layerid);
+          setTimeout(() => {
+            this.$addStorageEvent(2, "isLogon", false);
+          }, 1000);
+        }
+      );
     }
   }
 };

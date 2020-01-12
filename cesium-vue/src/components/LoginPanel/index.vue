@@ -11,7 +11,7 @@
     <div class="loginpanel">
       <div class="login">
         <br />
-        <el-input placeholder="  登录用户名" v-model="username"></el-input>
+        <el-input placeholder="  登录用户名" v-model="userName"></el-input>
         <br />
         <br />
         <br />
@@ -34,20 +34,31 @@ export default {
     return {
       systitle: "",
       isShow: true,
-      username: "",
+      userName: "",
       pwd: ""
     };
   },
   mounted() {
-    this.systitle = this.$store.state.config.systitle;  
-    document.title = "欢迎使用:"+this.systitle;
+    let _self = this;
+    _self.systitle = window.sysconfig.systitle;
+    document.title = "欢迎使用:" + _self.systitle;
+    window.addEventListener("setItem", function(e) {
+      let key = e.key;
+      if (key == "isLogon") {
+        // console.log(e.newValue);
+        if (e.newValue == "false") {
+          // console.log(e);
+          _self.isShow = true;
+        }
+      }
+    });
   },
   methods: {
     login: function() {
-      if (this.username == "admin" && this.pwd == "admin") {
-        this.$store.commit("setUsername", this.username);
-        this.$store.commit("setLogintime", new Date().toLocaleString());
-        this.$store.commit("setLogin", true);
+      if (this.userName == "admin" && this.pwd == "admin") {
+        this.$addStorageEvent(2, "userName", this.userName);
+        this.$addStorageEvent(2, "loginTime", new Date().toLocaleString());
+        this.$addStorageEvent(2, "isLogon", true);
         this.isShow = false;
         $("#container").show();
       }
@@ -55,15 +66,6 @@ export default {
     reSet: function() {
       this.username = "";
       this.pwd = "";
-    }
-  },
-  watch: {
-    "$store.state.isLogin": function() {
-      console.log(this.$store.state.isLogin);
-      if (this.$store.state.isLogin !== true) {
-        console.log("aaa");
-        this.isShow = true;
-      }
     }
   }
 };
@@ -123,6 +125,5 @@ export default {
   left: 0;
   background: url('../../assets/images/bg2.jpeg') no-repeat;
   background-size: 100% 100%;
-  // opacity: 0.9;
   z-index: 9999;
 }</style>

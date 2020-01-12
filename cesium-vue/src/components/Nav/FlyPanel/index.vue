@@ -65,7 +65,7 @@ export default {
     };
   },
   mounted() {
-    let fpf = this.$store.state.config.fpf;
+    let fpf = window.sysconfig.fpf;
     // console.log("fly", fpf);
     for (let index = 0; index < fpf.length; index++) {
       let option = {};
@@ -92,7 +92,7 @@ export default {
       console.log(value);
       let _self = this;
    
-      let fpf = this.$store.state.config.fpf;
+      let fpf = window.sysconfig.fpf;
       let fpfpath = fpf[value].path;
 
       //添加fpf飞行文件，fpf由SuperMap iDesktop生成

@@ -1,7 +1,7 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime : 2019-12-20 13:34:50
+ * @LastEditTime : 2019-12-25 13:34:58
  * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
@@ -52,17 +52,16 @@ export default {
       $("#bubble").hide();
     },
     goPosition: function() {
-     
       var scenePosition = null; // 记录在场景中点击的笛卡尔坐标点
       var infoboxContainer = document.getElementById("bubble");
 
-      scene.postRender.addEventListener(function() {
+      window.scene.postRender.addEventListener(function() {
         // 每一帧都去计算气泡的正确位置
         if (scenePosition) {
           var canvasHeight = scene.canvas.height;
           var windowPosition = new Cesium.Cartesian2();
           Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-            scene,
+            window.scene,
             scenePosition,
             windowPosition
           );
@@ -83,20 +82,27 @@ export default {
       $("#bubble").show();
 
       if (this.entity != null) {
-        viewer.entities.remove(this.entity);
+        window.viewer.entities.remove(this.entity);
       }
-      this.entity = viewer.entities.add({
+      this.entity = window.viewer.entities.add({
         position: Cesium.Cartesian3.fromDegrees(
           parseFloat(this.position.x),
           parseFloat(this.position.y),
           parseFloat(this.position.z)
         ),
         point: {
-          color: Cesium.Color.RED, //点位颜色
-          pixelSize: 0 //像素点大小
+          pixelSize: 5,
+          color: Cesium.Color.RED,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2
         }
       });
-      viewer.flyTo(this.entity, {
+      console.log(
+        parseFloat(this.position.x),
+        parseFloat(this.position.y),
+        parseFloat(this.position.z)
+      );
+      window.viewer.flyTo(this.entity, {
         offset: {
           heading: Cesium.Math.toRadians(0),
           pitch: Cesium.Math.toRadians(-45),

@@ -99,24 +99,6 @@
             "id": 3,
             "label": "北京CDB",
             "sceneurl": "https://www.supermapol.com/realspace/services/3D-CBD/rest/realspace",
-            "isInitScene": false
-        },
-        {
-            "id": 4,
-            "label": "广州白模",
-            "sceneurl": "https://www.supermapol.com/realspace/services/3D-GuangZhou/rest/realspace",
-            "isInitScene": false
-        },
-        {
-            "id": 5,
-            "label": "北京奥林匹克公园",
-            "sceneurl": "https://www.supermapol.com/realspace/services/3D-OlympicGreen/rest/realspace",
-            "isInitScene": false
-        },
-        {
-            "id": 1,
-            "label": "仙桃",
-            "sceneurl": "http://192.168.1.12:8090/iserver/services/3D-xt/rest/realspace",
             "isInitScene": true
         }
     ],
@@ -211,5 +193,8 @@
                 "geojson": "./js/geojson/chenchang.json"
             }
         ]
+    },
+    "user": {
+        "isLogin": false
     }
 }

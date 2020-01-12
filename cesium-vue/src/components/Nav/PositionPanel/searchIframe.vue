@@ -1,7 +1,7 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime : 2019-12-24 14:28:24
+ * @LastEditTime : 2019-12-25 13:34:38
  * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       data: [],
-      features: {},
       total: 0,
       fromIndex: 0,
       toIndex: 14,
@@ -70,34 +69,46 @@ export default {
       let _self = this;
       _self.data = [];
       console.log(fromIndex, toIndex);
-      let POI = this.$store.state.config.POI;
-      // console.log(this.input, POI);
-      let sqlParam = new SuperMap.GetFeaturesBySQLParameters({
-        queryParameter: {
-          attributeFilter: `${POI.queryfield} like '%${this.input}%'`
-        },
-        datasetNames: [`${POI.datasource}:${POI.dataset}`],
-        fromIndex: fromIndex,
-        toIndex: toIndex
-      });
-      L.supermap
-        .featureService(POI.url)
-        .getFeaturesBySQL(sqlParam, function(serviceResult) {
-          if (serviceResult.result.featureCount > 0) {
-            _self.total = serviceResult.result.totalCount;
-            _self.features = serviceResult.result.features;
-            console.log(_self.features);
-            for (let feature of _self.features.features) {
+      let POI = window.sysconfig.POI;
+
+      $.ajax({
+        url:
+          POI.url +
+          `/featureResults.json?returnContent=true&fromIndex=${fromIndex}&toIndex=${toIndex}`,
+        type: "POST",
+        data: JSON.stringify({
+          datasetNames: [`${POI.datasource}:${POI.dataset}`],
+          getFeatureMode: "SQL",
+          queryParameter: {
+            attributeFilter: `${POI.queryfield} like '%${this.input}%'`
+          }
+        }),
+        contentType: false, //禁止设置请求类型
+        processData: false, //禁止jquery对DAta数据的处理,默认会处理
+        success: function(serviceResult) {
+          console.log(serviceResult);
+          if (serviceResult.featureCount > 0) {
+            _self.total = serviceResult.totalCount;
+            let queryIndex = _self.arrSelect(
+              serviceResult.features[0].fieldNames,
+              POI.queryfield
+            );
+            for (let feature of serviceResult.features) {
               _self.data.push({
-                id: "SUPERMAP" + feature.id,
-                label: feature.properties[POI.queryfield],
+                id: "SUPERMAP" + feature.ID,
+                label: feature.fieldValues[queryIndex],
                 feature: feature
               });
             }
           }
-        });
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      });
     },
-    goPosition: function(properties) {
+    goPosition: function(feature) {
+      let _self = this;
       var scenePosition = null; // 记录在场景中点击的笛卡尔坐标点
       var infoboxContainer = document.getElementById("bubble");
 
@@ -127,15 +138,16 @@ export default {
 
       $("#bubble").empty();
 
-      let showfield = this.$store.state.config.POI.showfield;
-      console.log(showfield);
+      let showfield = window.sysconfig.POI.showfield;
+      console.log(feature);
 
       let content = `<blockquote class="layui-elem-quote">`;
       for (let item of showfield) {
         for (let key in item) {
-          console.log(key);
-          console.log(item[key]);
-          content += `${item[key]}:${properties[key]}<br>`;
+          // console.log(key);
+          // console.log(item[key]);
+          let fieldIndex = _self.arrSelect(feature.fieldNames, key);
+          content += `${item[key]}:${feature.fieldValues[fieldIndex]}<br>`;
         }
       }
       content += `</blockquote>`;
@@ -152,8 +164,10 @@ export default {
           parseFloat(this.position.z)
         ),
         point: {
-          color: Cesium.Color.RED, //点位颜色
-          pixelSize: 0 //像素点大小
+          pixelSize: 5,
+          color: Cesium.Color.RED,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2
         }
       });
       viewer.flyTo(this.entity, {
@@ -168,17 +182,24 @@ export default {
       let index = this.toIndex + 1;
       this.searchPOI((page - 1) * index, page * index - 1);
     },
-    nodeClick(data, node) {
+    nodeClick: function(data, node) {
       let feature = data.feature;
-      this.position.x = feature.geometry.coordinates[0];
-      this.position.y = feature.geometry.coordinates[1];
-      this.goPosition(feature.properties);
+      this.position.x = feature.geometry.center.x;
+      this.position.y = feature.geometry.center.y;
+      this.goPosition(feature);
+    },
+    arrSelect: function(arr, val) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == val) return i;
+      }
+      return -1;
     }
   }
 };
 </script>
 <style lang="stylus" scoped>
 .area {
+  margin-top: 5px;
   width: 248px;
   white-space: nowrap;
   overflow: hidden;

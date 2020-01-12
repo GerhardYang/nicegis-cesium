@@ -30,12 +30,12 @@ export default {
     };
   },
   mounted() {
-    for (let scene of this.$store.state.config.scenes) {
+    for (let scene of window.sysconfig.scenes) {
       if (scene.isInitScene) {
         this.defaultCheckKeys.push(scene.id);
       }
     }
-    this.data = this.$store.state.config.scenes;
+    this.data = window.sysconfig.scenes;
     for (let item of this.data) {
       if (item.checked) {
         this.defaultCheckKeys.push(item.id);

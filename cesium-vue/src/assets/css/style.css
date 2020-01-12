@@ -29,6 +29,7 @@
 
 .layui-elem-quote {
     background: #333;
+    padding: 10px 20px;
     opacity: 0.7;
     border-left: 15px solid #c03;
     color: #fff;

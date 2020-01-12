@@ -28,11 +28,11 @@ export default {
     };
   },
   mounted() {
-    this.data.push(this.$store.state.config.division);
+    this.data.push(window.sysconfig.division);
   },
   watch: {
     "$store.state.config": function() {
-      this.data.push(this.$store.state.config.division);
+      this.data.push(window.sysconfig.division);
     }
   },
   methods: {

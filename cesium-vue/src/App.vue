@@ -16,7 +16,6 @@
 
 
 <script>
-
 import Nav from "./components/Nav/";
 import Footer from "./components/Footer/";
 import LoginPanel from "./components/LoginPanel/";

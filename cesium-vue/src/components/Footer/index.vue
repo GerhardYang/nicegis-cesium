@@ -39,7 +39,7 @@ export default {
   },
   mounted() {
     let stateInfos = this.stateInfos;
-    this.copyright = this.$store.state.config.copyright;
+    this.copyright = window.sysconfig.copyright;
     this.handleMOUSE_MOVE(stateInfos, viewer);
     this.handleWHEEL(stateInfos, viewer);
   },

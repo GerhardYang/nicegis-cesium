@@ -31,7 +31,7 @@ export default {
     };
   },
   mounted() {
-    this.openLayersControler();
+    // this.openLayersControler();
   },
   methods: {
     openLayersControler: function() {

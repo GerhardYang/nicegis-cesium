@@ -1,7 +1,7 @@
 <!--
  * @Author: GerhardYang
  * @Date: 2019-11-08 23:15:43
- * @LastEditTime : 2019-12-24 16:38:37
+ * @LastEditTime : 2019-12-25 09:48:50
  * @LastEditors  : GerhardYang
  * @Description: your file description
  -->
@@ -58,28 +58,29 @@ export default {
   },
   methods: {
     gotoSearch: function() {
-      if (this.layerIndex.search == null) {
-        this.layerIndex.search = this.$layer.iframe({
-          content: {
-            content: searchIframe, //传递的组件对象
-            parent: this, //当前的vue对象
-            data: { input: this.input } //props
-          },
-          cancel: () => {
-            //关闭弹窗事件
-            this.layerIndex.search = null;
-            viewer.dataSources.removeAll();
-          },
-          shade: false, //是否显示遮罩
-          shadeClose: false, //点击遮罩是否关闭
-          maxmin: false, //开启最大化最小化
-          scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
-          resize: false, //是否允许拉伸，默认是不允许
-          area: ["200px", "500px"],
-          offset: [145, 400],
-          title: "搜索结果"
-        });
+      if (this.layerIndex.search != null) {
+        this.$layer.close(this.layerIndex.search);
       }
+      this.layerIndex.search = this.$layer.iframe({
+        content: {
+          content: searchIframe, //传递的组件对象
+          parent: this, //当前的vue对象
+          data: { input: this.input } //props
+        },
+        cancel: () => {
+          //关闭弹窗事件
+          this.layerIndex.search = null;
+          viewer.dataSources.removeAll();
+        },
+        shade: false, //是否显示遮罩
+        shadeClose: false, //点击遮罩是否关闭
+        maxmin: false, //开启最大化最小化
+        scrollbar: false, //是否允许浏览器出现滚动条:默认是允许
+        resize: false, //是否允许拉伸，默认是不允许
+        area: ["200px", "510px"],
+        offset: [145, 400],
+        title: "搜索结果"
+      });
     },
     gotoArea: function() {
       if (this.layerIndex.area == null) {
@@ -132,7 +133,8 @@ export default {
     clear: function() {
       $("#bubble").empty();
       $("#bubble").hide();
-      viewer.dataSources.removeAll();
+      window.viewer.dataSources.removeAll();
+      window.viewer.entities.removeAll();
     }
   }
 };

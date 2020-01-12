@@ -7,7 +7,6 @@
  */
 import Vue from 'vue'
 import App from './App.vue'
-import store from './store'
 
 import "font-awesome/css/font-awesome.min.css"
 
@@ -20,34 +19,45 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI);
 
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
-
-import L from 'leaflet';
-import '@supermap/iclient-leaflet';
-Vue.use(L);
-
-
 import './assets/css/style.css';
 import './assets/css/pretty.css';
 
-import './assets/js/initcontainer'
-
 Vue.config.productionTip = false;
 
-axios.get("./js/config/config.json").then(res => {
-  // console.log(res);
-  store.commit("changeConfig", res.data);
-  
-  new Vue({
-    store,
-    render: h => h(App)
-  }).$mount('#app');
-  // 加载完成隐藏加载动画
-  $(".loading").remove();
-  $("#container").show();
+console.log(window.sysconfig);
 
-}).catch(err => {
-  layer.alert("图层配置文件错误，请检查/js/config/config.json ！");
-});
+Vue.prototype.$addStorageEvent = function (type, key, data) {
+  if (type === 1) {
+    // 创建一个StorageEvent事件
+    var newStorageEvent = document.createEvent('StorageEvent');
+    const storage = {
+      setItem: function (k, val) {
+        localStorage.setItem(k, val);
+        // 初始化创建的事件
+        newStorageEvent.initStorageEvent('setItem', false, false, k, null, val, null, null);
+        // 派发对象
+        window.dispatchEvent(newStorageEvent);
+      }
+    }
+    return storage.setItem(key, data);
+  } else {
+    // 创建一个StorageEvent事件
+    var newStorageEvent = document.createEvent('StorageEvent');
+    const storage = {
+      setItem: function (k, val) {
+        sessionStorage.setItem(k, val);
+        // 初始化创建的事件
+        newStorageEvent.initStorageEvent('setItem', false, false, k, null, val, null, null);
+        // 派发对象
+        window.dispatchEvent(newStorageEvent);
+      }
+    }
+    return storage.setItem(key, data);
+  }
+}
+new Vue({
+  render: h => h(App)
+}).$mount('#app');
+// 加载完成隐藏加载动画
+$(".loading").remove();
+  // $("#container").show();
